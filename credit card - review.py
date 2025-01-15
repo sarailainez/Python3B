@@ -41,7 +41,7 @@ def main():
     my_credit_card = CreditCard()
 
     #card details using setters
-    my_credit_card.set_card_name("John Doe's Credit Card")
+    my_credit_card.set_card_name("Yang Song Credit Card")
     my_credit_card.set_card_limit(5000)
 
     #+ transactions

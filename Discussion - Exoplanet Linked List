@@ -1,0 +1,73 @@
+"""Discussion - Exoplanet Linked List - Sarai Lainez"""
+
+from collections import deque
+
+
+class ExoplanetNode:
+    def __init__(self, name, OrbRadius, OrbPeriod, year, numJupiters):
+        self.next = None
+        self.ID = name
+        self.orbital_radius = OrbRadius
+        self.orbital_period = OrbPeriod
+        self.discovery_date = year
+        self.mass = numJupiters
+
+    def remove_after(self):
+        temp = self.next
+        if temp is not None:
+            self.next = temp.next
+        return temp
+
+    def insert_after(self, new_node):
+        if not isinstance(new_node, ExoplanetNode):
+            return
+        new_node.next = self.next
+        self.next = new_node
+
+    def __str__(self):
+        return (f"id: {self.ID}\nOrbital Radius: {self.orbital_radius}\n"
+                f"Orbital Period: {self.orbital_period}\nDiscovery Date: {self.discovery_date}\n"
+                f"Mass: {self.mass}")
+
+
+def count_exoplanets_by_year(exoplanet_list, year, index=0, count=0):
+    if index >= len(exoplanet_list):
+        return count
+    if exoplanet_list[index].discovery_date == year:
+        count += 1
+    return count_exoplanets_by_year(exoplanet_list, year, index + 1, count)
+
+
+def main():
+    # Creating exoplanet nodes
+    HD1 = ExoplanetNode("--HD-191939-e", 0.397, 101.5, 2022, 0.33981)
+    Delphini = ExoplanetNode("18 Delphini b", 2.476, 2.7 * 365, 2008, 9.207)  # Converted years to days
+    K2 = ExoplanetNode("-K2-33-b", 0.0409, 5.4, 2016, 3.7)
+
+    # Creating a linked list using deque
+    exoplanet_list = deque([HD1, Delphini, K2])
+
+    def display_exoplanets():
+        print("\nExoplanets in the list:")
+        for planet in exoplanet_list:
+            print(planet, "\n")
+
+    def remove_last_exoplanet():
+        if exoplanet_list:
+            removed = exoplanet_list.pop()
+            print(f"Removed last exoplanet: {removed.ID}\n")
+
+    def display_exoplanets_by_year(year):
+        count = count_exoplanets_by_year(list(exoplanet_list), year)
+        print(f"Total number of exoplanets discovered in {year}: {count}\n")
+
+    # Testing functions
+    display_exoplanets()
+    remove_last_exoplanet()
+    print("\nModified Exoplanet List:")
+    display_exoplanets()
+    display_exoplanets_by_year(2024)
+
+
+if __name__ == "__main__":
+    main()
